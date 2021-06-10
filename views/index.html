@@ -50,19 +50,24 @@
 
             <hr>
 
+            <h2>Steam Games</h2>
+
             <section class="tiles">
-                <article class="style1">
+                {% for game in free_steam %}
+                
+                <article class="style{{ range(1, 7) | random }}">
                     <span class="image">
                         <img src="static/images/pic01.jpg" alt="" />
                     </span>
                     <a href="game.html">
-                        <h2>Free Game</h2>
+                        <h2>{{ game['name'] }}</h2>
                         <div class="content">
                             <p>Free Game</p>
                         </div>
                     </a>
                 </article>
-                <article class="style2">
+                {% endfor %}
+                <!-- <article class="style2">
                     <span class="image">
                         <img src="static/images/pic02.jpg" alt="" />
                     </span>
@@ -116,7 +121,7 @@
                             <p>Free Game</p>
                         </div>
                     </a>
-                </article>
+                </article> -->
             </section>
         </div>
     </div>

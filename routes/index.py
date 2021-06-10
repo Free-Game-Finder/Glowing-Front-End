@@ -1,12 +1,13 @@
 from flask import Blueprint, request, redirect, render_template
-
+from utils import default
+from . import steam
 
 index = Blueprint('index', __name__)
 
 
 @index.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html', free_steam=steam.get_free_games())
 
 
 @index.route('/signup', methods=['POST'])
