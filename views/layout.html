@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>FGN - Free Game Notifier</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% assets "css_modules" %}
+    <link rel="stylesheet" type="text/css" href=" {{ ASSET_URL }} ">
+    <noscript>
+        <link rel="stylesheet" href="css/noscript.css" />
+    </noscript>
+    {% endassets %}
+</head>
+
+<body class="is-preload">
+    {% block body %}
+
+    {% endblock %}
+
+    {% assets "js_modules" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+</body>
+
+</html>
