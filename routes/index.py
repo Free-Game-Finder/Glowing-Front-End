@@ -1,8 +1,9 @@
 from flask import Blueprint, request, redirect, render_template
 from utils import default
-from . import steam
+from . import steam, db
 
 index = Blueprint('index', __name__)
+config = default.get("config.json")
 
 
 @index.route('/')
@@ -23,5 +24,8 @@ def signup():
                 steam = False
         except:
             steam = False
+        
+        db.db_connect()
+        db.db_insert(phone=phone, steam=steam)
 
     return redirect('/')
