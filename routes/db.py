@@ -8,7 +8,7 @@ class database:
 
 
 def db_connect():
-    database.db = pymongo.MongoClient(os.getenv('SECRET_KEY',))
+    database.db = pymongo.MongoClient(os.getenv('db_url'))
     database.users = database.db.fgn.users
 
 def db_prior_entry(phone):
