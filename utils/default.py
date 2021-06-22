@@ -2,6 +2,7 @@ import time
 import json
 import traceback
 import timeago as timesince
+import datetime
 
 from collections import namedtuple
 from io import BytesIO
@@ -9,8 +10,10 @@ from io import BytesIO
 
 def get(file="config.json"):
     try:
-        with open(file, encoding='utf8') as data:
-            return json.load(data, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
+        with open(file, encoding="utf8") as data:
+            return json.load(
+                data, object_hook=lambda d: namedtuple("X", d.keys())(*d.values())
+            )
     except AttributeError:
         raise AttributeError("Unknown argument")
     except FileNotFoundError:
@@ -18,8 +21,8 @@ def get(file="config.json"):
 
 
 def traceback_maker(err, advance: bool = True):
-    _traceback = ''.join(traceback.format_tb(err.__traceback__))
-    error = ('```py\n{1}{0}: {2}\n```').format(type(err).__name__, _traceback, err)
+    _traceback = "".join(traceback.format_tb(err.__traceback__))
+    error = ("```py\n{1}{0}: {2}\n```").format(type(err).__name__, _traceback, err)
     return error if advance else f"{type(err).__name__}: {err}"
 
 
@@ -53,14 +56,24 @@ def actionmessage(case, mass=False):
     return f"✅ Successfully {output}"
 
 
-async def prettyResults(ctx, filename: str = "Results", resultmsg: str = "Here's the results:", loop=None):
+async def prettyResults(
+    ctx, filename: str = "Results", resultmsg: str = "Here's the results:", loop=None
+):
     if not loop:
         return await ctx.send("The result was empty...")
 
-    pretty = "\r\n".join([f"[{str(num).zfill(2)}] {data}" for num, data in enumerate(loop, start=1)])
+    pretty = "\r\n".join(
+        [f"[{str(num).zfill(2)}] {data}" for num, data in enumerate(loop, start=1)]
+    )
 
     if len(loop) < 15:
         return await ctx.send(f"{resultmsg}```ini\n{pretty}```")
 
-    data = BytesIO(pretty.encode('utf-8'))
+    data = BytesIO(pretty.encode("utf-8"))
     return data
+
+
+def timestamp():
+    now = datetime.datetime.now()
+    now.strftime("%Y-%m-%dT%H:%M:%S") + ("-%02d" % (now.microsecond / 10000))
+    return str(now)

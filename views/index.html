@@ -24,7 +24,8 @@
     <div id="main" style="display: flex;">
         <div class="inner">
             <header>
-                <h1>Get notified through text if there are any free games different gaming platforms</h1>
+                <h1>Get notified through <strike>text</strike> email if there are any free games different gaming
+                    platforms</h1>
                 <p>Platforms incorporated so far: <b>Steam<b></p>
             </header>
             <section class="ltiles">
@@ -32,7 +33,17 @@
                     <form method="post" action="/signup">
                         <div class="row gtr-uniform">
                             <div class="col-6 col-12-xsmall">
+                                <input type="email" name="email" id="email" value=""
+                                    placeholder="example@example.com" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
                                 <input type="text" name="phone" id="phone" value="" placeholder="123-456-7890" />
+                            </div>
+                            <div class="col-6 col-12-small">
+                                <input type="checkbox" id="notify_email" name="notify_email">
+                                <label for="notify_email">Email</label>
+                                <input type="checkbox" id="notify_text" name="notify_text">
+                                <label for="notify_text"><strike>Text</strike> WIP</label>
                             </div>
                             <div class="col-6 col-12-small">
                                 <input type="checkbox" id="steam" name="steam">
