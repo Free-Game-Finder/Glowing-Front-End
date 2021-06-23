@@ -33,6 +33,7 @@ def db_insert(phone, email, notify_email, notify_text, steam):
         "notify_email": notify_email,
         "notify_text": notify_text,
         "steam": steam,
+        "current_steam": [],
     }
 
     exist = db_prior_entry(phone, email)
