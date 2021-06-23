@@ -15,21 +15,44 @@ def db_connect():
     database.users = database.db.fgn.users
 
 
-def db_prior_entry(phone):
-    if database.users.find_one({"phone": phone}) == None:
-        return False
-    return True
+def db_prior_entry(phone, email):
+    if database.users.find_one({"phone": phone}) != None:
+        return 1
+    elif database.users.find_one({"email": email}) != None:
+        return 2
+    return 0
 
 
 def db_insert(phone, email, notify_email, notify_text, steam):
-    database.users.insert_one(
-        {
-            "timestamp": default.timestamp(),
-            "info_email_sent": False,
-            "phone": phone,
-            "email": email,
-            "notify_email": notify_email,
-            "notify_text": notify_text,
-            "steam": steam,
-        }
-    )
+
+    data = {
+                "timestamp": default.timestamp(),
+                "info_email_sent": False,
+                "phone": phone,
+                "email": email,
+                "notify_email": notify_email,
+                "notify_text": notify_text,
+                "steam": steam,
+            }
+
+    exist = db_prior_entry(phone, email)
+
+    if exist == 0:
+        database.users.insert_one(
+            data
+        )
+    elif exist == 1:
+        database.users.update_one(
+            {
+                "_id": database.users.find_one({"phone": phone})['_id']
+            },
+            data
+        )
+    elif exist == 2:
+        database.users.update_one(
+            {
+                "_id": database.users.find_one({"email": email})['_id']
+            },
+            data
+        )
+    return
