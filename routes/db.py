@@ -26,33 +26,29 @@ def db_prior_entry(phone, email):
 def db_insert(phone, email, notify_email, notify_text, steam):
 
     data = {
-                "timestamp": default.timestamp(),
-                "info_email_sent": False,
-                "phone": phone,
-                "email": email,
-                "notify_email": notify_email,
-                "notify_text": notify_text,
-                "steam": steam,
-            }
+        "timestamp": default.timestamp(),
+        "info_email_sent": False,
+        "phone": phone,
+        "email": email,
+        "notify_email": notify_email,
+        "notify_text": notify_text,
+        "steam": steam,
+    }
 
     exist = db_prior_entry(phone, email)
 
     if exist == 0:
-        database.users.insert_one(
-            data
-        )
+        database.users.insert_one(data)
     elif exist == 1:
         database.users.update_one(
-            {
-                "_id": database.users.find_one({"phone": phone})['_id']
-            },
-            data
+            {"_id": database.users.find_one({"phone": phone})["_id"]},
+            {"$set": data},
+            upsert=True,
         )
     elif exist == 2:
         database.users.update_one(
-            {
-                "_id": database.users.find_one({"email": email})['_id']
-            },
-            data
+            {"_id": database.users.find_one({"email": email})["_id"]},
+            {"$set": data},
+            upsert=True,
         )
     return
