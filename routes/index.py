@@ -11,6 +11,11 @@ def home():
     return render_template("index.html", free_steam=steam.get_free_games())
 
 
+@index.route("/steam_game/<string:game_id>")
+def movie_info(game_id):
+    return render_template("steam_game.html", steam_info=steam.get_game_info(game_id))
+
+
 @index.route("/signup", methods=["POST"])
 def signup():
     phone = request.form["phone"]
