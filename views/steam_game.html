@@ -2,6 +2,44 @@
 
 {% block body %}
 
-{{ steam_info }}
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+
+            <!-- Logo -->
+            <a href="/" class="logo">
+                <span class="symbol"><img src="static/images/logo.svg" alt="" /></span><span class="title">Free Game
+                    Notifier</span>
+            </a>
+
+        </div>
+    </header>
+
+
+    <div id="main">
+        <div class="inner">
+            <h1>{{ steam_info['name'] }}</h1>
+            <span class="image main"><img src="{{ steam_info['header_image'] }}" alt="" /></span>
+
+            <ul class="alt">
+                <li>Price: {{ steam_info['price_overview']['final_formatted'] }}</li>
+                <li>{{ steam_info['detailed_description']|safe }}</li>
+            </ul>
+
+            Categories
+            <ul>
+                {% for category in steam_info['categories'] %}
+                <li>{{ category['description'] }}</li>
+                {% endfor %}
+            </ul>
+
+            <a href="https://store.steampowered.com/agecheck/app/{{ steam_info['steam_appid'] }}"
+                class="button primary fit large">View Steam Page</a>
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}
